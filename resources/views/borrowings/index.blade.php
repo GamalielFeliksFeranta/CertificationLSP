@@ -2,37 +2,51 @@
 
 @section('content')
 <div class="container">
-    <h1>Daftar Peminjaman</h1>
-
-    <a href="{{ route('borrowings.create') }}" class="btn btn-primary">Tambah Peminjaman</a>
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h1>Borrow List</h1>
+        <a href="{{ route('borrowings.create') }}" class="roundedAdd btn bg-dark text-white btn-lg">
+            <span class="mr-2">
+                <i class="fa-solid fa-plus custom-icon"></i>
+            </span>
+        </a>
+    </div>
 
     @if(session('success'))
-    <div class="alert alert-success mt-3">{{ session('success') }}</div>
+    <div class="alert alert-success mt-3">
+        {{ session('success') }}
+    </div>
     @endif
 
-    <table class="table mt-3">
-        <thead>
+    <table class="table table-bordered table-striped table-hover mx-auto">
+        <thead class="table-light">
             <tr>
-                <th>Nama Anggota</th>
-                <th>Judul Buku</th>
-                <th>Tanggal Pinjam</th>
-                <th>Tanggal Kembali</th>
-                <th>Aksi</th>
+                <th class="text-center p-3">Member Name</th>
+                <th class="text-center p-3">Book Title</th>
+                <th class="text-center p-3">Borrow Date</th>
+                <th class="text-center p-3">Due Date</th>
+                <th class="text-center p-3">Return Date</th>
+                <th class="text-center p-3">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($borrowings as $borrowing)
             <tr>
-                <td>{{ $borrowing->member->name }}</td>
-                <td>{{ $borrowing->book->title }}</td>
-                <td>{{ $borrowing->borrow_date }}</td>
-                <td>{{ $borrowing->return_date }}</td>
-                <td>
-                    <a href="{{ route('borrowings.edit', $borrowing->id) }}" class="btn btn-warning">Edit</a>
+                <td class="text-center p-3">{{ $borrowing->member->name }}</td>
+                <td class="text-center p-3">{{ $borrowing->book->title }}</td>
+                <td class="text-center p-3">{{ $borrowing->borrow_date }}</td>
+                <td class="text-center p-3">{{ $borrowing->return_date }}</td>
+                <td class="text-center p-3">{{ $borrowing->actual_return_date ?? '-' }}</td>
+                <td class="text-center p-3">
+                    <a href="{{ route('borrowings.edit', $borrowing->id) }}" class="btn btn-warning btn-sm">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
+
                     <form action="{{ route('borrowings.destroy', $borrowing->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Hapus</button>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
                     </form>
                 </td>
             </tr>

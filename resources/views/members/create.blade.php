@@ -28,7 +28,7 @@
         @enderror
     </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
-    <a href="{{ route('members.index') }}" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-success btn-lg w-100">Save</button>
+    <a href="{{ route('members.index') }}" class="btn btn-secondary btn-lg w-100 mt-3">Cancel</a>
 </form>
 @endsection
