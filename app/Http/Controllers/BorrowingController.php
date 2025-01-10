@@ -25,25 +25,25 @@ class BorrowingController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'member_id' => 'required|exists:members,id',
-        'book_id' => 'required|exists:books,id',
-        'borrow_date' => 'required|date',
-    ]);
+    {
+        $request->validate([
+            'member_id' => 'required|exists:members,id',
+            'book_id' => 'required|exists:books,id',
+            'borrow_date' => 'required|date',
+        ]);
 
-    $return_date = Carbon::parse($request->borrow_date)->addDays(7)->format('Y-m-d');
+        $return_date = Carbon::parse($request->borrow_date)->addDays(7)->format('Y-m-d');
 
-    Borrowing::create([
-        'member_id' => $request->member_id,
-        'book_id' => $request->book_id,
-        'borrow_date' => $request->borrow_date,
-        'return_date' => $return_date,
-        'actual_return_date' => null,  
-    ]);
+        Borrowing::create([
+            'member_id' => $request->member_id,
+            'book_id' => $request->book_id,
+            'borrow_date' => $request->borrow_date,
+            'return_date' => $return_date,
+            'actual_return_date' => null,  
+        ]);
 
-    return redirect()->route('borrowings.index')->with('success', 'Peminjaman berhasil dilakukan.');
-}
+        return redirect()->route('borrowings.index')->with('success', 'Peminjaman berhasil dilakukan.');
+    }
 
     public function edit($id)
     {
@@ -59,7 +59,7 @@ class BorrowingController extends Controller
             'member_id' => 'required|exists:members,id',
             'book_id' => 'required|exists:books,id',
             'borrow_date' => 'required|date',
-            'actual_return_date' => 'nullable|date',
+            'actual_return_date' => 'nullable|date|after_or_equal:borrow_date',
         ]);
 
         $borrowing = Borrowing::findOrFail($id);

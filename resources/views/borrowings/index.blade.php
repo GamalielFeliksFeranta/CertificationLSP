@@ -35,20 +35,30 @@
                 <td class="text-center p-3">{{ $borrowing->book->title }}</td>
                 <td class="text-center p-3">{{ $borrowing->borrow_date }}</td>
                 <td class="text-center p-3">{{ $borrowing->return_date }}</td>
-                <td class="text-center p-3">{{ $borrowing->actual_return_date ?? '-' }}</td>
-                <td class="text-center p-3">
-                    <a href="{{ route('borrowings.edit', $borrowing->id) }}" class="btn btn-warning btn-sm">
-                        <i class="fa-solid fa-pencil"></i>
-                    </a>
-
-                    <form action="{{ route('borrowings.destroy', $borrowing->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </form>
+                <td class="text-center p-3" 
+                    style="color: 
+                        @if($borrowing->actual_return_date) 
+                            {{ $borrowing->actual_return_date > $borrowing->return_date ? 'red' : 'green' }} 
+                        @endif;">
+                    {{ $borrowing->actual_return_date ?? '-' }}
                 </td>
+
+                <td class="text-center p-3">
+                    @if(is_null($borrowing->actual_return_date))
+                        <a href="{{ route('borrowings.edit', $borrowing->id) }}" class="btn btn-warning btn-sm">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+
+                        <form action="{{ route('borrowings.destroy', $borrowing->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    @endif
+                </td>
+
             </tr>
             @endforeach
         </tbody>

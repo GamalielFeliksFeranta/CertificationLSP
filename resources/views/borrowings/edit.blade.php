@@ -50,7 +50,38 @@
                 value="{{ old('actual_return_date', $borrowing->actual_return_date) }}">
         </div>
 
+      
+
+
         <button type="submit" class="btn btn-success btn-lg w-100">Update</button>
     </form>
 </div>
+
+
+
+
+
+
+
+
+  <!-- <div class="form-group mb-3">
+            <label for="actual_return_date" class="form-label">Return Date</label>
+            <input type="text" name="actual_return_date" id="actual_return_date" class="form-control" 
+                value="{{ old('actual_return_date', $borrowing->actual_return_date) }}">
+            </div> -->
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('#actual_return_date').datepicker({
+        format: 'yyyy-mm-dd',
+        startDate: 'today',  
+        autoclose: true,     
+        todayHighlight: true 
+    });
+    $('#actual_return_date').datepicker('setDate', new Date());
+});
+</script> -->
 @endsection
